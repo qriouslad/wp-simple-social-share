@@ -106,3 +106,41 @@ function wpsss_reddit_checkbox() {
 }
 
 add_action('admin_init', 'wpsss_settings');
+
+
+/**
+ * Display social sharing button below page and post content
+ *
+ */
+function wpsss_add_share_icons($content) {
+	$html = '<div class="social-share-wrapper"><div class="share-on">Share on: </div>';
+
+	global $post;
+
+	$url = get_permalink($post->ID);
+	$url = esc_url($url);
+
+	if ( get_option('wpsss-facebook') == 1 ) {
+		$html = $html . '<div class="facebook"><a target="_blank" href="https://www.facebook.com/sharer.php?u=' . $url . '">Facebook</a></div>';
+	}
+
+	if ( get_option('wpsss-twitter') == 1 ) {
+		$html = $html . '<div class="twitter"><a target="_blank" href="https://twitter.com/sharer?url=' . $url . '">Twiter</a></div>';
+	}
+
+	if ( get_option('wpsss-linkedin') == 1 ) {
+		$html = $html . '<div class="linkedin"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=' . $url . '">LinkedIn</a></div>';
+
+	}
+
+	if ( get_option('wpsss-reddit') == 1 ) {
+		$html = $html . '<div class="reddit"><a target="_blank" href="https://reddit.com/submit?url=' . $url . '">Reddit</a></div>';
+	}
+
+	$html = $html . '<div class="clear"></div></div>';
+
+	return $content = $content . $html;
+
+}
+
+add_filter('the_content', 'wpsss_add_share_icons');
