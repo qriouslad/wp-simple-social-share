@@ -144,3 +144,15 @@ function wpsss_add_share_icons($content) {
 }
 
 add_filter('the_content', 'wpsss_add_share_icons');
+
+
+/**
+ * Enqueue style.css
+ *
+ */
+function wpsss_styles() {
+	wp_register_style('wpsss-style-css', plugin_dir_url(__FILE__) . 'style.css');
+	wp_enqueue_style('wpsss-style-css');
+}
+
+add_action('wp_enqueue_scripts', 'wpsss_styles');
